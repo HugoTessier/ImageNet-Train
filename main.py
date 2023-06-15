@@ -7,6 +7,9 @@ from utils.utils import separates_normal_and_norm_params
 from utils.ema import ExponentialMovingAverage
 from accelerate import Accelerator
 
+# MONITORER DUREE DES EPOCHS
+
+
 if __name__ == '__main__':
     if c.autotuner:
         torch.backends.cudnn.benchmark = True
@@ -31,7 +34,8 @@ if __name__ == '__main__':
                             train_crop_size=c.train_crop_size,
                             random_erase_prob=c.random_erase,
                             ra_reps=c.ra_reps,
-                            hflip_prob=c.hflip_prob)
+                            hflip_prob=c.hflip_prob,
+                            pin_memory=c.pin_memory)
     params, norm_params = separates_normal_and_norm_params(model)
     optimizer = torch.optim.SGD([{"params": params, "weight_decay": c.weight_decay},
                                  {"params": norm_params, "weight_decay": c.norm_weight_decay}],

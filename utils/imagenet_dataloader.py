@@ -260,7 +260,8 @@ def load_imagenet(traindir,
                   random_erase_prob=0.1,
                   ra_reps=4,
                   hflip_prob=0.5,
-                  num_classes=1000):
+                  num_classes=1000,
+                  pin_memory=True):
     collate_fn = None
     mixup_transforms = []
     if mixup_alpha > 0.0:
@@ -305,7 +306,7 @@ def load_imagenet(traindir,
         batch_size=train_batch_size,
         sampler=RASampler(dataset, accelerator=accelerator, shuffle=True, repetitions=ra_reps),
         num_workers=workers,
-        pin_memory=True,
+        pin_memory=pin_memory,
         collate_fn=collate_fn,
     )
     test_loader = torch.utils.data.DataLoader(
@@ -313,7 +314,7 @@ def load_imagenet(traindir,
         batch_size=test_batch_size,
         shuffle=False,
         num_workers=workers,
-        pin_memory=True
+        pin_memory=pin_memory
     )
 
     return {'train': train_loader, 'test': test_loader}

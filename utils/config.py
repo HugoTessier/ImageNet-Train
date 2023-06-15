@@ -45,6 +45,7 @@ train_crop_size = 176
 # Acceleration
 channels_last = True
 autotuner = True
+pin_memory = True
 
 # Miscellaneous
 debug = True
