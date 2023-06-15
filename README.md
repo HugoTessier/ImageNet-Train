@@ -1,4 +1,6 @@
 # ImageNet-Train
-Script to train networks on ImageNet.
 
-Check `python3 main.py --help` for arguments.
+Commands to launch
+`accelerate config`
+`export DATASET=./path/to/the/dataset/you/want`
+`accelerate launch main.py`

@@ -1,7 +1,9 @@
 import os
 
-# ngpus = 8
+# Dataset root
 
+traindir = os.getenv("DATASET")
+valdir = os.getenv("DATASET")
 
 # Optimizer
 lr = 0.5

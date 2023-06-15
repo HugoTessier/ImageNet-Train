@@ -18,8 +18,8 @@ if __name__ == '__main__':
     if c.channels_last:
         model = model.to(memory_format=torch.channels_last, non_blocking=True)
 
-    dataset = load_imagenet(traindir='placeholder',
-                            valdir='placeholder',
+    dataset = load_imagenet(traindir=c.traindir,
+                            valdir=c.valdir,
                             accelerator=accelerator,
                             train_batch_size=1,
                             test_batch_size=1,
