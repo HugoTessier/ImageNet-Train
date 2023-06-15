@@ -12,5 +12,6 @@ def separates_normal_and_norm_params(model):
             if hasattr(m, 'weight'):
                 params.append(m.weight)
             if hasattr(m, 'bias'):
-                params.append(m.bias)
+                if m.bias is not None:
+                    params.append(m.bias)
     return params, norm_params
