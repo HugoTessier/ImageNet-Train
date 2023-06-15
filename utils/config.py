@@ -46,6 +46,7 @@ train_crop_size = 176
 channels_last = True
 autotuner = True
 pin_memory = True
+persistent_workers = True
 
 # Miscellaneous
 debug = True

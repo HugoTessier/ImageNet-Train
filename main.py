@@ -32,7 +32,8 @@ if __name__ == '__main__':
                             random_erase_prob=c.random_erase,
                             ra_reps=c.ra_reps,
                             hflip_prob=c.hflip_prob,
-                            pin_memory=c.pin_memory)
+                            pin_memory=c.pin_memory,
+                            persistent_workers=c.persistent_workers)
     params, norm_params = separates_normal_and_norm_params(model)
     optimizer = torch.optim.SGD([{"params": params, "weight_decay": c.weight_decay},
                                  {"params": norm_params, "weight_decay": c.norm_weight_decay}],
