@@ -7,9 +7,6 @@ from utils.utils import separates_normal_and_norm_params
 from utils.ema import ExponentialMovingAverage
 from accelerate import Accelerator
 
-# MONITORER DUREE DES EPOCHS
-
-
 if __name__ == '__main__':
     if c.autotuner:
         torch.backends.cudnn.benchmark = True
