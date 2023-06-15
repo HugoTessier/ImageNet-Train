@@ -2,8 +2,8 @@ import os
 
 # Dataset root
 
-traindir = os.getenv("DATASET")
-valdir = os.getenv("DATASET")
+traindir = os.getenv("DATASET_TRAIN")
+valdir = os.getenv("DATASET_VAL")
 
 # Optimizer
 lr = 0.5
