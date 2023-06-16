@@ -43,9 +43,8 @@ class ImageNetTrainer:
         if self.accelerator.is_main_process:
             self.accelerator.print('Launching training.')
             self.training_start = time.time()
+            self.epoch_start = time.time()
         while self.current_epoch < self.epochs:
-            if self.accelerator.is_main_process:
-                self.epoch_start = time.time()
             if self.current_epoch == self.warmup_epochs:
                 self.ema.warmup_mode = False
             self.current_epoch = self.checkpoint_manager.step(self.current_epoch)
@@ -55,6 +54,8 @@ class ImageNetTrainer:
             self.scheduler.step()
             self.current_epoch += 1
             self.print_elapsed_time_message()
+            if self.accelerator.is_main_process:
+                self.epoch_start = time.time()
 
     def print_elapsed_time_message(self):
         if self.accelerator.is_main_process:

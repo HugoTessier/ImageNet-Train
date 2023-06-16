@@ -43,4 +43,4 @@ class Logger:
                                          for i in self.top5])).item()
             self.accelerator.print(f'Epoch n°{epoch}: Top-1 {round(top1, 2)}% Top-5 {round(top5, 2)}%')
             with open(os.path.join(self.path, 'results.txt'), 'a') as f:
-                f.write(f'{epoch}: {top1} {top5}')
+                f.write(f'{epoch}: {top1} {top5}\n')
