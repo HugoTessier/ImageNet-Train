@@ -49,8 +49,9 @@ channels_last = True
 autotuner = True
 pin_memory = True
 persistent_workers = True
+save_every_n_epochs = 10
 
 # Miscellaneous
-debug = True
+debug = False
 results_path = './results'
 checkpoint_path = './checkpoint'

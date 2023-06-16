@@ -22,7 +22,8 @@ class ImageNetTrainer:
                  debug=False,
                  channels_last=False,
                  results_path='./results',
-                 checkpoint_path='./checkpoint'):
+                 checkpoint_path='./checkpoint',
+                 save_every_n_epochs=1):
         self.epochs = epochs
         self.optimizer = optimizer
         self.scheduler = scheduler
@@ -38,6 +39,7 @@ class ImageNetTrainer:
         self.training_start = None
         self.epoch_start = None
         self.epoch_durations = []
+        self.save_every_n_epochs = save_every_n_epochs
 
     def __call__(self, model, dataset, reset_training=True):
         if self.accelerator.is_main_process:

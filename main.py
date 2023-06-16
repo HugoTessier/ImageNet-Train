@@ -72,6 +72,7 @@ if __name__ == '__main__':
                               ema=ema,
                               warmup_epochs=c.lr_warmup_epochs,
                               checkpoint_path=c.checkpoint_path,
-                              results_path=c.results_path)
+                              results_path=c.results_path,
+                              save_every_n_epochs=c.save_every_n_epochs)
 
     trainer(model, dataset)
