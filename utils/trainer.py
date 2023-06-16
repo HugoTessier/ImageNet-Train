@@ -49,7 +49,8 @@ class ImageNetTrainer:
         while self.current_epoch < self.epochs:
             if self.current_epoch == self.warmup_epochs:
                 self.ema.warmup_mode = False
-            self.current_epoch = self.checkpoint_manager.step(self.current_epoch)
+            if self.current_epoch % self.save_every_n_epochs == 0:
+                self.current_epoch = self.checkpoint_manager.step(self.current_epoch)
             dataset['train'].batch_sampler.sampler.set_epoch(self.current_epoch)
             self.train_one_epoch(model, dataset)
             self.test_one_epoch(model, dataset)
