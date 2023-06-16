@@ -77,7 +77,7 @@ class ImageNetTrainer:
                     data = data.to(memory_format=torch.channels_last, non_blocking=True)
                     target = target.to(memory_format=torch.channels_last, non_blocking=True)
                 output = model(data)
-                loss = self.criterion(output, target.long())
+                loss = self.criterion(output, target)
                 self.accelerator.backward(loss)
                 self.optimizer.step()
                 self.optimizer.zero_grad(set_to_none=True)

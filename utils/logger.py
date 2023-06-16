@@ -16,7 +16,7 @@ class Logger:
     @staticmethod
     def top1_accuracy(output, target):
         pred = output.argmax(dim=1, keepdim=True)
-        return pred.eq(target.view_as(pred)).mean()
+        return pred.eq(target.view_as(pred)).float().mean().view(1)
 
     @staticmethod
     def top5_accuracy(output, target):
@@ -28,7 +28,7 @@ class Logger:
 
         ind_which_topk_matched_truth = correct[:5]
         flattened_indicator_which_topk_matched_truth = ind_which_topk_matched_truth.reshape(-1).float()
-        return flattened_indicator_which_topk_matched_truth.float().mean()
+        return flattened_indicator_which_topk_matched_truth.float().mean().view(1)
 
     def measure_metrics(self, output, target):
         with torch.no_grad():
@@ -37,9 +37,9 @@ class Logger:
 
     def process_test_results(self, epoch):
         if self.accelerator.is_main_process:
-            top1 = torch.mean(torch.cat([torch.mean(self.accelerator.gather_for_metrics(i))
+            top1 = torch.mean(torch.cat([torch.mean(self.accelerator.gather_for_metrics(i)).view(1)
                                          for i in self.top1])).item()
-            top5 = torch.mean(torch.cat([torch.mean(self.accelerator.gather_for_metrics(i))
+            top5 = torch.mean(torch.cat([torch.mean(self.accelerator.gather_for_metrics(i)).view(1)
                                          for i in self.top5])).item()
             self.accelerator.print(f'Epoch n°{epoch}: Top-1 {round(top1, 2)}% Top-5 {round(top5, 2)}%')
             with open(os.path.join(self.path, 'results.txt'), 'a') as f:

@@ -1,8 +1,8 @@
 import utils.config as c
-from utils.imagenettrainer import ImageNetTrainer
+from utils.trainer import ImageNetTrainer
 import torch
 import torchvision
-from utils.imagenet_dataloader import load_imagenet
+from utils.dataset import load_imagenet
 from utils.utils import separates_normal_and_norm_params
 from utils.ema import ExponentialMovingAverage
 from accelerate import Accelerator
