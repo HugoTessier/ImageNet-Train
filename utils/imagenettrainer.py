@@ -49,18 +49,21 @@ class ImageNetTrainer:
             if self.current_epoch == self.warmup_epochs:
                 self.ema.warmup_mode = False
             self.current_epoch = self.checkpoint_manager.step(self.current_epoch)
-            dataset['train'].sampler.set_epoch(self.current_epoch)
+            dataset['train'].batch_sampler.sampler.set_epoch(self.current_epoch)
             self.train_one_epoch(model, dataset)
             self.test_one_epoch(model, dataset)
             self.scheduler.step()
             self.current_epoch += 1
-            if self.accelerator.is_main_process:
-                self.epoch_durations.append(time.time() - self.epoch_start)
-                estimation = np.array(self.epoch_durations).mean() * (self.epochs - self.current_epoch)
-                self.accelerator.print(
-                    f'Total elapsed time: {timedelta(seconds=time.time() - self.training_start)}, '
-                    f'elapsed time during last epoch: {timedelta(seconds=self.epoch_durations[-1])}, '
-                    f'estimated remaining time: {timedelta(seconds=estimation)}')
+            self.print_elapsed_time_message()
+
+    def print_elapsed_time_message(self):
+        if self.accelerator.is_main_process:
+            self.epoch_durations.append(time.time() - self.epoch_start)
+            estimation = np.array(self.epoch_durations).mean() * (self.epochs - self.current_epoch)
+            self.accelerator.print(
+                f'Total elapsed time: {timedelta(seconds=time.time() - self.training_start)}, '
+                f'elapsed time during last epoch: {timedelta(seconds=self.epoch_durations[-1])}, '
+                f'estimated remaining time: {timedelta(seconds=estimation)}')
 
     def train_one_epoch(self, model, dataset):
         model.train()
