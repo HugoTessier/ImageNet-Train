@@ -93,7 +93,6 @@ class ImageNetTrainer:
                         break
                 if self.channels_last:
                     data = data.to(memory_format=torch.channels_last, non_blocking=True)
-                    target = target.to(memory_format=torch.channels_last, non_blocking=True)
 
                 output = model(data)
                 self.logger.measure_metrics(output, target)
