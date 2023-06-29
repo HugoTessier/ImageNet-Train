@@ -6,7 +6,6 @@ from utils.dataset import load_imagenet
 from utils.utils import separates_normal_and_norm_params
 from utils.ema import ExponentialMovingAverage
 from accelerate import Accelerator
-import gc
 
 if __name__ == '__main__':
     if c.autotuner:

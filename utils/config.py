@@ -29,7 +29,7 @@ model_ema_decay = 0.99998
 # Data augmentation
 mixup_alpha = 0.2
 cutmix_alpha = 1.0
-ra_reps = 4
+ra_reps = 1
 random_erase = 0.1
 hflip_prob = 0.5
 

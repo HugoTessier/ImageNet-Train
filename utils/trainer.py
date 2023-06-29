@@ -1,11 +1,11 @@
 import torch
 from accelerate import Accelerator
-
 from utils.checkpoint_manager import CheckPointManager
 from utils.logger import Logger
 import time
 from datetime import timedelta
 import numpy as np
+from utils.dataset import RASampler
 
 
 class ImageNetTrainer:
@@ -51,7 +51,8 @@ class ImageNetTrainer:
                 self.ema.warmup_mode = False
             if self.current_epoch % self.save_every_n_epochs == 0:
                 self.current_epoch = self.checkpoint_manager.step(self.current_epoch)
-            dataset['train'].batch_sampler.sampler.set_epoch(self.current_epoch)
+            if isinstance(dataset['train'].batch_sampler.sampler, RASampler):
+                dataset['train'].batch_sampler.sampler.set_epoch(self.current_epoch)
             self.train_one_epoch(model, dataset)
             self.test_one_epoch(model, dataset)
             self.scheduler.step()
@@ -76,7 +77,6 @@ class ImageNetTrainer:
                 if self.debug:
                     if i != 0:
                         break
-
                 if self.channels_last:
                     data = data.to(memory_format=torch.channels_last, non_blocking=True)
                     target = target.to(memory_format=torch.channels_last, non_blocking=True)
@@ -96,7 +96,6 @@ class ImageNetTrainer:
                         break
                 if self.channels_last:
                     data = data.to(memory_format=torch.channels_last, non_blocking=True)
-
                 output = model(data)
                 self.logger.measure_metrics(output, target)
             self.logger.process_test_results(self.current_epoch)
